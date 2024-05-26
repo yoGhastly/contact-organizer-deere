@@ -1,13 +1,14 @@
 from flask import Blueprint, request, jsonify
+from flask_cors import cross_origin
 from .models import Contact
 from .utils import validate_contact_data
 
 contacts_bp = Blueprint('contacts', __name__)
 
-# In-memory storage for contacts
 contacts = []
 
-@contacts_bp.route('/', methods=['POST'])
+@contacts_bp.route('/contacts', methods=['POST'])
+@cross_origin()  
 def add_contact():
     data = request.json
     if data is None:
@@ -31,20 +32,24 @@ def add_contact():
         birthday=data.get('birthday')
     )
     contacts.append(new_contact)
+    print(f'New contact added: {new_contact.__dict__}')
     return jsonify({'message': 'Contact added successfully', 'contact': new_contact.__dict__}), 201
 
-@contacts_bp.route('/<contact_id>', methods=['GET'])
+@contacts_bp.route('/contacts/<contact_id>', methods=['GET'])
+@cross_origin()  
 def get_contact(contact_id):
     contact = next((c for c in contacts if c.id == contact_id), None)
     if contact:
         return jsonify(contact.__dict__), 200
     return jsonify({'error': 'Contact not found'}), 404
 
-@contacts_bp.route('/', methods=['GET'])
+@contacts_bp.route('/contacts', methods=['GET'])
+@cross_origin()  
 def get_contacts():
     return jsonify([contact.__dict__ for contact in contacts]), 200
 
-@contacts_bp.route('/<contact_id>', methods=['PUT'])
+@contacts_bp.route('/contacts/<contact_id>', methods=['PUT'])
+@cross_origin()  
 def update_contact(contact_id):
     data = request.json
     if data is None:
@@ -56,7 +61,8 @@ def update_contact(contact_id):
         return jsonify({'message': 'Contact updated successfully', 'contact': contact.__dict__}), 200
     return jsonify({'error': 'Contact not found'}), 404
 
-@contacts_bp.route('/<contact_id>', methods=['DELETE'])
+@contacts_bp.route('/contacts/<contact_id>', methods=['DELETE'])
+@cross_origin()  
 def delete_contact(contact_id):
     global contacts
     contacts = [c for c in contacts if c.id != contact_id]
