@@ -46,7 +46,7 @@ def get_contact(contact_id):
 @contacts_bp.route('/contacts', methods=['GET'])
 @cross_origin()  
 def get_contacts():
-    return jsonify([contact.__dict__ for contact in contacts]), 200
+    return jsonify({'contacts': [c.__dict__ for c in contacts]}), 200
 
 @contacts_bp.route('/contacts/<contact_id>', methods=['PUT'])
 @cross_origin()  
