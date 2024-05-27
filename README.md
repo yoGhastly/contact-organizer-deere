@@ -12,6 +12,12 @@
   cd contact-organizer-deere
 ```
 
+**Note:** YOU MUST CREATE A .env FILE IN THE client/ DIRECTORY WITH THE FOLLOWING CONTENT:
+
+```bash
+  VITE_API_BASE_URL=http://127.0.0.1:5000/api
+```
+
 3. Go to client/ directory:
 
 ```bash
