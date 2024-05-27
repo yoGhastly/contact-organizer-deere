@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Container, Box, Tabs, Tab, Typography } from "@mui/material";
 import { CreateContactForm } from "../components/create-contact-form";
-import { Contacts } from "../../contacts/pages";
+import { Contacts } from "../../contacts/components";
+import { Favorites } from "../../contacts/components/favorites";
 
 export const Home: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -29,7 +30,7 @@ export const Home: React.FC = () => {
               <Typography variant="h5" gutterBottom>
                 Favorites
               </Typography>
-              {/* Add your Favorites content here */}
+              <Favorites />
             </Box>
           )}
           {tabValue === 2 && (
